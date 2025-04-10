@@ -10,7 +10,6 @@ terraform {
     bucket       = "akram-eks-production-s3"
     region       = "us-east-1"
     key          = "eks/terraform.tfstate"
-    profile      = "default"
     use_lockfile = true
     encrypt      = true
   }

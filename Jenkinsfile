@@ -19,26 +19,27 @@ pipeline {
         }
         stage('Git Pulling') {
             steps {
-                git branch: 'master', url: 'https://github.com/larafaakram/eks-production.git'
+                git url: 'https://github.com/larafaakram/eks-production.git'
+                //git credentialsId: 'my-git-credential', url: 'git@github.com:larafaakram/eks-production.git'branch: 'main', 
             }
         }
         stage('Init') {
             steps {
-                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
                 sh 'terraform -chdir=eks/ init'
                 }
             }
         }
         stage('Validate') {
             steps {
-                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
                 sh 'terraform -chdir=eks/ validate'
                 }
             }
         }
         stage('Action') {
             steps {
-                withAWS(credentials: 'aws-creds', region: 'ap-south-1') {
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
                     script {    
                         if (params.Terraform_Action == 'plan') {
                             sh "terraform -chdir=eks/ plan -var-file=${params.Environment}.tfvars"
