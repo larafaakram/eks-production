@@ -7,14 +7,15 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "praduman-eks-s3"
-    region         = "ap-south-1"
-    key            = "eks/terraform.tfstate"
-    dynamodb_table = "Lock-Files"
-    encrypt        = true
+    bucket       = "akram-eks-production-s3"
+    region       = "us-east-1"
+    key          = "eks/terraform.tfstate"
+    profile      = "default"
+    use_lockfile = true
+    encrypt      = true
   }
 }
 
 provider "aws" {
-  region  = var.aws-region
+  region = var.aws-region
 }
